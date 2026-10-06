@@ -1,0 +1,538 @@
+/* ==========================================================================
+   SCROLL-DRIVEN HERO SECTION - REACT COMPONENT STYLES
+   ========================================================================== */
+
+.scroll-hero-wrapper {
+  position: relative;
+  height: 280vh;
+  background-color: var(--hero-bg, #07090e);
+  color: #f8fafc;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  overflow: visible;
+}
+
+/* Color Variables */
+.scroll-hero-wrapper[data-theme="lime"] {
+  --hero-accent: #38ef7d;
+  --hero-accent-glow: rgba(56, 239, 125, 0.45);
+  --hero-accent-sub: #11998e;
+  --hero-accent-text: #052e16;
+}
+
+.scroll-hero-wrapper[data-theme="cyan"] {
+  --hero-accent: #00f2fe;
+  --hero-accent-glow: rgba(0, 242, 254, 0.5);
+  --hero-accent-sub: #4facfe;
+  --hero-accent-text: #082f49;
+}
+
+.scroll-hero-wrapper[data-theme="orange"] {
+  --hero-accent: #ff5e3a;
+  --hero-accent-glow: rgba(255, 94, 58, 0.5);
+  --hero-accent-sub: #ff2a6d;
+  --hero-accent-text: #450a0a;
+}
+
+.scroll-hero-wrapper[data-theme="purple"] {
+  --hero-accent: #c084fc;
+  --hero-accent-glow: rgba(192, 132, 252, 0.5);
+  --hero-accent-sub: #9333ea;
+  --hero-accent-text: #3b0764;
+}
+
+/* Ambient Radial Glow */
+.scroll-hero-radial-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 30%, var(--hero-accent-glow), transparent 70%);
+  opacity: 0.15;
+  transition: background 0.6s ease;
+}
+
+/* Pinned Track */
+.scroll-hero-pinned {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 50%, #111726 0%, #07090e 80%);
+}
+
+/* Telemetry HUD Bar */
+.scroll-hero-hud {
+  position: absolute;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92%, 1280px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.scroll-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-family: 'Space Grotesk', monospace;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.scroll-hero-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--hero-accent);
+  box-shadow: 0 0 8px var(--hero-accent);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.scroll-hero-telemetry {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.telemetry-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.telemetry-col-label {
+  font-size: 0.68rem;
+  font-family: 'Space Grotesk', monospace;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.telemetry-col-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', monospace;
+  color: #f8fafc;
+}
+
+.telemetry-col-unit {
+  font-size: 0.7rem;
+  color: var(--hero-accent);
+  margin-left: 2px;
+}
+
+/* Roadway Container */
+.scroll-hero-road {
+  width: 100vw;
+  height: 240px;
+  position: relative;
+  background: #121620;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 -20px 50px rgba(0, 0, 0, 0.5),
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    inset 0 0 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+}
+
+.scroll-hero-road-texture {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 8px 8px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.scroll-hero-road-centerline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.25) 0,
+    rgba(255, 255, 255, 0.25) 25px,
+    transparent 25px,
+    transparent 55px
+  );
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.scroll-hero-road-glow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hero-accent), transparent);
+  opacity: 0.35;
+  pointer-events: none;
+}
+.scroll-hero-road-glow.top { top: 0; }
+.scroll-hero-road-glow.bottom { bottom: 0; }
+
+/* Speed Trail */
+.scroll-hero-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, 
+    rgba(56, 239, 125, 0.04) 0%, 
+    rgba(56, 239, 125, 0.18) 60%, 
+    var(--hero-accent) 100%
+  );
+  box-shadow: 
+    0 0 30px var(--hero-accent-glow),
+    inset -10px 0 25px var(--hero-accent);
+  z-index: 2;
+  pointer-events: none;
+  border-right: 3px solid #ffffff;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Car Container */
+.scroll-hero-car-wrapper {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 195px;
+  width: 390px;
+  z-index: 15;
+  pointer-events: none;
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-hero-car-img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 15px var(--hero-accent-glow));
+  transition: filter 0.4s ease;
+}
+
+.scroll-hero-car-headlights {
+  position: absolute;
+  right: -240px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 260px;
+  height: 170px;
+  background: radial-gradient(
+    ellipse at left center,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 35%,
+    transparent 75%
+  );
+  clip-path: polygon(0 35%, 100% 0%, 100% 100%, 0 65%);
+  pointer-events: none;
+  z-index: 10;
+  filter: blur(2px);
+}
+
+.scroll-hero-exhaust {
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 35px;
+  height: 50px;
+  background: radial-gradient(circle, #ffffff 0%, var(--hero-accent) 60%, transparent 100%);
+  filter: blur(4px);
+  opacity: 0.8;
+  z-index: 14;
+}
+
+/* Headline Letter Spans */
+.scroll-hero-headline-container {
+  position: absolute;
+  left: 6%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 6;
+  pointer-events: none;
+  user-select: none;
+  width: 88vw;
+}
+
+.scroll-hero-headline-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.2rem, 1.2vw, 1.4rem);
+  white-space: nowrap;
+}
+
+.scroll-hero-char {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 7.5vw, 8rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: #1a202c;
+  opacity: 0.18;
+  display: inline-block;
+  transform: translateZ(0);
+  transition: 
+    color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    text-shadow 0.3s ease;
+  will-change: transform, opacity, color;
+}
+
+.scroll-hero-char.space {
+  width: clamp(1rem, 3vw, 3rem);
+}
+
+.scroll-hero-char.lit {
+  color: #ffffff;
+  opacity: 1;
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 25px var(--hero-accent),
+    0 0 50px var(--hero-accent-glow);
+  transform: scale(1.08) translateY(-2px);
+}
+
+/* Stat Cards */
+.scroll-hero-card {
+  position: absolute;
+  z-index: 25;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.25rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  min-width: 250px;
+  max-width: 320px;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+.scroll-hero-card.card-1 { top: 13%; left: 24%; }
+.scroll-hero-card.card-2 { bottom: 13%; left: 45%; }
+.scroll-hero-card.card-3 { top: 13%; left: 66%; }
+.scroll-hero-card.card-4 { bottom: 13%; left: 82%; }
+
+.scroll-hero-card.active {
+  border-color: var(--hero-accent);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    0 0 25px var(--hero-accent-glow),
+    inset 0 0 15px rgba(56, 239, 125, 0.1);
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.scroll-hero-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hero-accent);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scroll-hero-card-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.scroll-hero-card-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.scroll-hero-card-sym {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--hero-accent);
+}
+
+.scroll-hero-card-desc {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.scroll-hero-card-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  margin-top: 0.4rem;
+  overflow: hidden;
+}
+
+.scroll-hero-card-progressbar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--hero-accent-sub), var(--hero-accent));
+  border-radius: 9999px;
+  transition: width 0.3s ease-out;
+}
+
+/* Scrubber Dock */
+.scroll-hero-scrubber {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90%, 960px);
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  z-index: 30;
+}
+
+.scroll-hero-scrubber-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.scroll-hero-scrubber-track {
+  flex: 1;
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.scroll-hero-scrubber-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--hero-accent-sub), var(--hero-accent));
+  border-radius: 9999px;
+  box-shadow: 0 0 10px var(--hero-accent-glow);
+}
+
+.scroll-hero-scrubber-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border: 3px solid var(--hero-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--hero-accent-glow);
+  pointer-events: none;
+}
+
+.scroll-hero-milestones {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scroll-hero-milestone-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.68rem;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scroll-hero-milestone-btn:hover,
+.scroll-hero-milestone-btn.active {
+  background: var(--hero-accent);
+  color: var(--hero-accent-text);
+  border-color: var(--hero-accent);
+  font-weight: 700;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+  .scroll-hero-card.card-1 { left: 15%; top: 12%; }
+  .scroll-hero-card.card-2 { left: 40%; bottom: 12%; }
+  .scroll-hero-card.card-3 { left: 62%; top: 12%; }
+  .scroll-hero-card.card-4 { left: 80%; bottom: 12%; }
+}
+
+@media (max-width: 768px) {
+  .scroll-hero-road { height: 190px; }
+  .scroll-hero-car-wrapper { height: 150px; width: 300px; }
+  .scroll-hero-card { min-width: 220px; padding: 1rem 1.2rem; }
+  .scroll-hero-card-num { font-size: 2.2rem; }
+  .scroll-hero-card.card-1 { left: 8%; top: 10%; }
+  .scroll-hero-card.card-2 { left: 30%; bottom: 10%; }
+  .scroll-hero-card.card-3 { left: 55%; top: 10%; }
+  .scroll-hero-card.card-4 { left: 75%; bottom: 10%; }
+  .scroll-hero-milestones { display: none; }
+  .telemetry-col:not(:first-child) { display: none; }
+}

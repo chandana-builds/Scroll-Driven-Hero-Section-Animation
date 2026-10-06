@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lime">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scroll-Driven Hero Section Animation | ITZFIZZ McLaren 720S Showcase</title>
+  
+  <meta name="description" content="A luxury, scroll-driven interactive hero section animation inspired by McLaren 720S telemetry and kinematics. Built with Vanilla JS, CSS, GSAP, ScrollTrigger, and Lenis." />
+  <meta name="keywords" content="GSAP, ScrollTrigger, scroll animation, McLaren, web animation, frontend, vanilla js" />
+  <meta name="author" content="ITZFIZZ Engineering" />
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN for Utility Classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Vector Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Background Grids & Ambient Radial Glows -->
+  <div class="bg-grid-overlay" aria-hidden="true"></div>
+  <div class="bg-radial-glow" id="ambientGlow" aria-hidden="true"></div>
+
+  <!-- ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== -->
+  <header class="site-header">
+    <a href="#overview" class="brand-container">
+      <div class="brand-symbol">
+        <i data-lucide="zap" class="w-5 h-5 text-black"></i>
+      </div>
+      <span class="brand-name">ITZFIZZ</span>
+    </a>
+
+    <!-- Navigation Links -->
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+      <a href="#overview" class="hover:text-white transition-colors">Overview</a>
+      <a href="#telemetry" class="hover:text-white transition-colors">Telemetry</a>
+      <a href="#features" class="hover:text-white transition-colors">Engineering</a>
+      <a href="#specs" class="hover:text-white transition-colors">Specs Matrix</a>
+    </nav>
+
+    <!-- Interactive Navigation Controls -->
+    <div class="nav-controls">
+      <!-- Color Palette Picker -->
+      <div class="theme-palette-picker" title="Switch Vehicle Livery Color">
+        <button class="color-dot-btn active" data-color="lime" aria-label="Lime Theme"></button>
+        <button class="color-dot-btn" data-color="cyan" aria-label="Cyan Theme"></button>
+        <button class="color-dot-btn" data-color="orange" aria-label="Orange Theme"></button>
+        <button class="color-dot-btn" data-color="purple" aria-label="Purple Theme"></button>
+      </div>
+
+      <!-- Synthesized Audio Engine Toggle -->
+      <button class="header-action-btn" id="soundToggle" title="Toggle Synthesized Engine Sound">
+        <i data-lucide="volume-x" id="soundIcon" class="w-4 h-4 text-emerald-400"></i>
+        <span id="soundText" class="hidden sm:inline">Audio: OFF</span>
+      </button>
+
+      <!-- Scroll to Top / Replay -->
+      <a href="#overview" class="header-action-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Replay</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="overview">
+    <!-- ==========================================================================
+         CORE SCROLL-DRIVEN HERO SECTION
+         Height: 280vh (Pinned track stays fixed for 100vh during the animation scrub)
+         ========================================================================== -->
+    <section class="hero-scroll-wrapper" id="scrollWrapper">
+      <div class="hero-pinned-track" id="pinnedTrack">
+        
+        <!-- Track HUD Status & Telemetry Bar -->
+        <div class="track-hud-bar" id="telemetry">
+          <div class="hud-badge">
+            <span class="hud-badge-dot"></span>
+            <span>McLaren 720S Kinematics &bull; Live Telemetry</span>
+          </div>
+
+          <div class="hud-telemetry">
+            <div class="telemetry-item">
+              <span class="telemetry-label">Velocity</span>
+              <span class="telemetry-value"><span id="hudSpeed">0</span><span class="telemetry-unit">MPH</span></span>
+            </div>
+            <div class="telemetry-item">
+              <span class="telemetry-label">Gear</span>
+              <span class="telemetry-value" id="hudGear">N</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="telemetry-label">RPM</span>
+              <span class="telemetry-value" id="hudRpm">1.2k</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="telemetry-label">Trajectory</span>
+              <span class="telemetry-value" id="hudProgress">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================================
+             ROADWAY CANVAS & VEHICLE
+             ====================================================================== -->
+        <div class="road-container" id="roadContainer">
+          <div class="road-texture"></div>
+          <div class="road-centerline"></div>
+          <div class="road-edge-glow top"></div>
+          <div class="road-edge-glow bottom"></div>
+
+          <!-- Luminous energetic trail expanding behind the car -->
+          <div class="vehicle-trail" id="vehicleTrail"></div>
+
+          <!-- The McLaren 720S Vehicle -->
+          <div class="car-wrapper" id="carWrapper">
+            <img 
+              src="assets/car.png" 
+              alt="McLaren 720S 2022 Supercar Top View" 
+              class="car-image" 
+              id="carImage"
+            />
+            <!-- Projector Headlight Beam -->
+            <div class="car-headlights"></div>
+            <!-- Jet Propulsion Flare -->
+            <div class="exhaust-jet"></div>
+          </div>
+
+          <!-- Letter-Spaced Headline Spans (W E L C O M E   I T Z F I Z Z) -->
+          <div class="hero-headline-container" id="headlineContainer">
+            <div class="headline-text-track" id="headlineTrack">
+              <!-- Dynamically populated by main.js with individual interactive character spans -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================================
+             IMPACT METRICS & STATISTIC CARDS
+             Staggered entrance on load + milestone highlights as car passes
+             ====================================================================== -->
+        <!-- Card 1 -->
+        <div class="stat-card" id="box1">
+          <div class="stat-card-badge">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+            <span>Fleet Logistics</span>
+          </div>
+          <div class="stat-card-number-row">
+            <span class="stat-card-number" data-target="58">0</span>
+            <span class="stat-card-symbol">%</span>
+          </div>
+          <p class="stat-card-desc">Increase in pickup point efficiency across urban hubs</p>
+          <div class="stat-card-progress">
+            <div class="stat-card-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="stat-card" id="box2">
+          <div class="stat-card-badge">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <span>Support Automation</span>
+          </div>
+          <div class="stat-card-number-row">
+            <span class="stat-card-number" data-target="23">0</span>
+            <span class="stat-card-symbol">%</span>
+          </div>
+          <p class="stat-card-desc">Decrease in customer support response escalations</p>
+          <div class="stat-card-progress">
+            <div class="stat-card-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="stat-card" id="box3">
+          <div class="stat-card-badge">
+            <i data-lucide="crosshair" class="w-3.5 h-3.5"></i>
+            <span>Telemetry Sensor</span>
+          </div>
+          <div class="stat-card-number-row">
+            <span class="stat-card-number" data-target="99.4">0</span>
+            <span class="stat-card-symbol">%</span>
+          </div>
+          <p class="stat-card-desc">Sensor synchronization accuracy in high-velocity tests</p>
+          <div class="stat-card-progress">
+            <div class="stat-card-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="stat-card" id="box4">
+          <div class="stat-card-badge">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+            <span>Aerodynamic Grip</span>
+          </div>
+          <div class="stat-card-number-row">
+            <span class="stat-card-number" data-target="40">0</span>
+            <span class="stat-card-symbol">%</span>
+          </div>
+          <p class="stat-card-desc">Reduction in drag coefficient with active aero wing</p>
+          <div class="stat-card-progress">
+            <div class="stat-card-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- ======================================================================
+             INTERACTIVE SCRUBBER DOCK & MILESTONES
+             ====================================================================== -->
+        <div class="scrubber-dock">
+          <div class="scrubber-label">
+            <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
+            <span>Timeline</span>
+          </div>
+
+          <div class="scrubber-track-outer" id="scrubberTrack" title="Click or drag to scrub animation">
+            <div class="scrubber-fill" id="scrubberFill"></div>
+            <div class="scrubber-thumb" id="scrubberThumb"></div>
+          </div>
+
+          <div class="scrubber-milestones">
+            <button class="milestone-btn" data-milestone="0">0% Launch</button>
+            <button class="milestone-btn" data-milestone="0.35">35% Velocity</button>
+            <button class="milestone-btn" data-milestone="0.65">65% Apex</button>
+            <button class="milestone-btn" data-milestone="1.0">100% Supersonic</button>
+          </div>
+
+          <div class="scroll-hint-indicator">
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+            <span>Scroll to Drive</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         INNOVATION & FEATURE SHOWCASE SECTION
+         ========================================================================== -->
+    <section class="showcase-content-section" id="features">
+      <div class="section-container">
+        
+        <div class="section-header-tag">
+          <i data-lucide="cpu" class="w-4 h-4"></i>
+          <span>Architecture & Physics</span>
+        </div>
+        
+        <h2 class="section-title">
+          Engineered for <span class="section-title-highlight">Extreme Motion</span> & Precision
+        </h2>
+        
+        <p class="section-subtitle">
+          Choreographed using hardware-accelerated 3D transforms, silky GSAP scrub kinematics, and high-frequency scroll telemetry that responds seamlessly across all viewport dimensions.
+        </p>
+
+        <!-- Feature Cards Grid -->
+        <div class="features-grid">
+          
+          <div class="feature-card">
+            <div class="feature-icon-box">
+              <i data-lucide="wind" class="w-6 h-6"></i>
+            </div>
+            <h3 class="feature-title">Active Kinetic Aerodynamics</h3>
+            <p class="feature-desc">
+              Integrated airbrake telemetry recalculates downforce distribution in 12ms, optimizing lateral stability through high-speed transitions.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-box">
+              <i data-lucide="gauge" class="w-6 h-6"></i>
+            </div>
+            <h3 class="feature-title">Proactive Chassis Control II</h3>
+            <p class="feature-desc">
+              Hydraulically linked suspension dampers continuously evaluate road camber and lateral cornering forces without physical anti-roll bars.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-box">
+              <i data-lucide="flame" class="w-6 h-6"></i>
+            </div>
+            <h3 class="feature-title">4.0L Twin-Turbo V8</h3>
+            <p class="feature-desc">
+              Delivering 720 PS and 770 Nm torque with ultra-low inertia twin-scroll turbochargers that guarantee instantaneous throttle response.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- ======================================================================
+             TECHNICAL SPECIFICATIONS MATRIX
+             ====================================================================== -->
+        <div class="specs-matrix" id="specs">
+          <div class="spec-item">
+            <div class="spec-value">2.8<span>s</span></div>
+            <div class="spec-label">0-60 MPH Acceleration</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-value">720<span>PS</span></div>
+            <div class="spec-label">Maximum Power Output</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-value">212<span>mph</span></div>
+            <div class="spec-label">Terminal Velocity</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-value">1,283<span>kg</span></div>
+            <div class="spec-label">Monocage II Dry Mass</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       SITE FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-credits">
+        <p>&copy; 2026 ITZFIZZ Interactive Experience. Recreated with Vanilla Web Tech & GSAP.</p>
+      </div>
+      <div class="footer-badges">
+        <span class="tech-badge">HTML5</span>
+        <span class="tech-badge">Vanilla CSS</span>
+        <span class="tech-badge">Modern JavaScript</span>
+        <span class="tech-badge">GSAP 3 + ScrollTrigger</span>
+        <span class="tech-badge">Lenis SmoothScroll</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       SCRIPTS: GSAP, ScrollTrigger, Lenis, and Custom Engine
+       ========================================================================== -->
+  <!-- GSAP Core & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis for Smooth Momentum Scrolling -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Main Animation Choreography -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>
