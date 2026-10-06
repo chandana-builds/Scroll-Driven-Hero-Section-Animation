@@ -1,6 +1,11 @@
-# Scroll-Driven Hero Section Animation (React)
+# 🏎️ Scroll-Driven Hero Section Animation (React)
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-react--red--sigma.vercel.app-00f2fe?style=for-the-badge&logo=vercel&logoColor=black)](https://react-red-sigma.vercel.app/)
+[![Author](https://img.shields.io/badge/Author-chandana--builds-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chandana-builds)
 
 A high-performance, scroll-driven interactive hero section animation inspired by McLaren 720S telemetry and kinematics. Built for React 18+ with GSAP, ScrollTrigger, and Lenis smooth momentum scrolling.
+
+**Live Demo**: [https://react-red-sigma.vercel.app/](https://react-red-sigma.vercel.app/)
 
 ---
 
@@ -62,3 +67,9 @@ A high-performance, scroll-driven interactive hero section animation inspired by
   className: 'card-1'
 }
 ```
+
+---
+
+## Author
+
+**Chandana Gurrapu** ([@chandana-builds](https://github.com/chandana-builds))

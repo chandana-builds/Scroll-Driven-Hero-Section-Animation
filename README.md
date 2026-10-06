@@ -1,112 +1,158 @@
-# 🏎️ Scroll-Driven Hero Section Animation
+<div align="center">
 
-A luxury, interactive, scroll-driven hero section inspired by **McLaren 720S** telemetry and kinematics. Engineered with **Vanilla JS, CSS3, GSAP, ScrollTrigger, Lenis**, along with a production-ready **React 18 + Vite** implementation.
+# 🏎️ McLaren 720S — Scroll-Driven Telemetry & Hero Animation
 
----
+An interactive, high-performance scroll-driven web experience inspired by supercar kinematics and telemetry instrumentation.
 
-## ✨ Features
+[![Live Demo](https://img.shields.io/badge/Live_Demo-react--red--sigma.vercel.app-00f2fe?style=for-the-badge&logo=vercel&logoColor=black)](https://react-red-sigma.vercel.app/)
+[![GitHub](https://img.shields.io/badge/Author-chandana--builds-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chandana-builds)
+[![License: MIT](https://img.shields.io/badge/License-MIT-38ef7d?style=for-the-badge)](LICENSE)
 
-- **🏎️ Kinematic Vehicle Scrubbing**: Pinned 280vh track synchronized at 60fps with vertical scroll position.
-- **💡 Synchronized Letter Illumination**: `"WELCOME ITZFIZZ"` characters sequentially light up with bloom and scale as the car drives past them.
-- **⚡ Dynamic Energy Speed Trail**: Energetic neon trail and exhaust jet expanding behind the vehicle.
-- **📊 Real-time Telemetry HUD**: Live metrics for velocity (0–208 MPH), dynamic gear shifting (`N`, `1`–`6`), RPM curve, and trajectory completion percentage.
-- **📈 Animated Impact Metric Cards**: Staggered cards with number count-up animations and milestone progress highlighting.
-- **🎛️ Interactive Scrubber Dock**: Click-to-scrub timeline with quick-jump milestone buttons (`0% Launch`, `35% Velocity`, `65% Apex`, `100% Supersonic`).
-- **🎨 Livery Theme Switcher**: 4 curated color palettes (`Lime`, `Cyan`, `Orange`, `Purple`) with matching CSS tokens and vehicle hue filters.
-- **🔊 Synthesized Web Audio Drone**: Pitch-shifting engine rumble responsive to scroll velocity plus letter activation ticks.
-- **⚛️ Dual Implementations**:
-  - **Vanilla Web**: Pure HTML5, CSS3, JavaScript (ready for GitHub Pages or static hosting).
-  - **React 18+**: Fully componentized with Vite, Tailwind utilities, and Lucide React.
+<br />
+
+[**Explore Live Demo ↗**](https://react-red-sigma.vercel.app/) &nbsp;|&nbsp; [**View Source Code ↗**](https://github.com/chandana-builds/Scroll-Driven-Hero-Section-Animation)
+
+</div>
 
 ---
 
-## 📁 Repository Structure
+## 📌 Overview
+
+This project is an exploration in combining **physics-based smooth scrolling**, **scroll-bound timeline interpolation**, and **dynamic SVG/DOM kinematics** to create an editorial-tier automotive showcase.
+
+As the user scrolls, a top-down rendering of the McLaren 720S accelerates across a pinned track while synchronizing real-time telemetry gauges, dynamic character bloom illumination, and interactive milestone metrics.
+
+Built as both a **lightweight, dependency-free Vanilla JavaScript application** and a **modular, production-ready React 18 + Vite component**.
+
+---
+
+## 🚀 Live Deployment
+
+The application is deployed and hosted on Vercel:
+
+👉 **[https://react-red-sigma.vercel.app/](https://react-red-sigma.vercel.app/)**
+
+---
+
+## ✨ Key Features & Engineering Highlights
+
+### 1. 🏎️ Kinematic Scrubbing & Smooth Momentum
+- **Pinned Track Mechanics**: Anchors the 240px roadway within a 280vh scroll track, giving the driver granular control over the vehicle's position.
+- **Lenis Inertia Engine**: Integrated with Lenis momentum scrolling to eliminate micro-stutters and input lag across high-refresh-rate displays.
+- **GSAP ScrollTrigger**: Frame-by-frame scrub calculation mapped to vehicle translation and trailing energy fields.
+
+### 2. 💡 Spatial Character Collision & Bloom Illumination
+- The headline (`"WELCOME ITZFIZZ"`) is tokenized into individual typography spans.
+- Rather than relying on simple CSS delays, letter activation is computed dynamically based on the car's bounding box and front-bumper offset. As the vehicle passes each glyph, it transitions from a muted state to full luminous bloom with scale compensation.
+
+### 3. 📊 Real-Time Telemetry HUD
+- **Velocity Tracking**: Dynamically scales from 0 to 208 MPH in direct proportion to trajectory completion.
+- **Transmission Logic**: Procedurally shifts between gears (`N`, `1`, `2`, `3`, `4`, `5`, `6`) across velocity thresholds.
+- **Tachometer Curve**: Calculates engine RPM between 1,200 idle and 8,500 redline.
+- **Progress Gauge**: Real-time readout of trajectory completion percentage.
+
+### 4. 🎛️ Interactive Scrubber Dock & Milestones
+- Bottom floating dock displays a scrubbable timeline with tactile quick-jump anchors:
+  - `0% Launch`
+  - `35% Velocity`
+  - `65% Apex`
+  - `100% Supersonic`
+- Metric milestone cards trigger dynamic progress indicators and count-up animations as the vehicle crosses their spatial triggers.
+
+### 5. 🎨 Multi-Theme Livery Engine
+- Instant color scheme switching across 4 bespoke automotive palettes:
+  - **Electric Lime** (`#38ef7d`)
+  - **Aero Cyan** (`#00f2fe`)
+  - **Apex Orange** (`#ff5e3a`)
+  - **Ultra Violet** (`#c084fc`)
+- Updates CSS variables, particle glows, and vehicle hue-rotation filters seamlessly.
+
+### 6. 🔊 Synthesized Web Audio Drone
+- Uses the native **Web Audio API** (Oscillator + Biquad Filter + Gain nodes) to synthesize a futuristic twin-turbo engine rumble that pitch-shifts in response to scroll velocity.
+- Micro-ticks fire on character collision events for tactile feedback.
+
+---
+
+## 🏗️ Architecture & Tech Stack
 
 ```
-.
+Scroll-Driven-Hero-Section-Animation/
 ├── assets/
-│   └── car.png               # McLaren 720S high-res top view asset
+│   └── car.png               # High-res McLaren 720S top-down view
 ├── css/
-│   └── style.css             # Glassmorphism, animations, responsive design
+│   └── style.css             # High-contrast dark mode, HUD glassmorphism
 ├── js/
-│   └── main.js               # GSAP, ScrollTrigger, Lenis, Web Audio engine
-├── index.html                # Main vanilla web entry point
-├── react/                    # React 18 + Vite implementation
-│   ├── public/assets/        # Static assets for React
-│   ├── ScrollHeroSection.jsx # Reusable React component
-│   ├── ScrollHeroSection.css # Component styles
-│   ├── App.jsx               # Demo showcase container
-│   ├── vite.config.js        # Vite config
-│   └── package.json          # Dependencies
-└── README.md
+│   └── main.js               # GSAP, ScrollTrigger, Lenis & Web Audio engine
+├── index.html                # Vanilla HTML5 standalone showcase
+│
+└── react/                    # React 18 + Vite implementation
+    ├── public/assets/        # Bundled static assets
+    ├── ScrollHeroSection.jsx # Isolated, prop-driven React component
+    ├── ScrollHeroSection.css # Scoped styles & responsive breakpoints
+    ├── App.jsx               # Showcase shell with HUD toggles
+    ├── vite.config.js        # Vite build config
+    └── package.json          # Dependency manifest
 ```
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Core** | JavaScript (ES6+), React 18, HTML5 Semantic Markup |
+| **Animation Engine** | GSAP 3, ScrollTrigger |
+| **Scroll Physics** | Lenis Smooth Scroll |
+| **Styling** | Vanilla CSS3, CSS Custom Properties, Glassmorphism, TailwindCSS utilities |
+| **Audio** | Native Web Audio API (Synthesized oscillators) |
+| **Build Tool** | Vite |
+| **Deployment** | Vercel (Global Edge Network) |
 
 ---
 
-## 🚀 Getting Started
+## ⚡ Performance Optimizations
 
-### 1. Vanilla HTML / CSS / JS Version
-Open `index.html` directly in your browser or run a simple local server:
+1. **Zero Layout Thrashing**: Letter coordinates and viewport widths are pre-computed during an initial layout pass and cached. Frame updates during scroll only touch hardware-accelerated `transform` and `opacity` properties.
+2. **Lag Smoothing Disabled**: `gsap.ticker.lagSmoothing(0)` ensures 1:1 synchronization between touch/wheel events and visual output.
+3. **Hardware Acceleration**: Heavy elements utilize `will-change: transform` and `translateZ(0)` for GPU compositing.
+4. **Clean Hook Lifecycles**: All animation instances, ticker listeners, and Web Audio contexts in the React version are cleanly dismantled on unmount to prevent memory leaks.
 
+---
+
+## 💻 Local Development
+
+### Running the Vanilla Version
+Open `index.html` directly in any modern browser, or spin up a local server:
 ```bash
-# Python
+# Using Python
 python -m http.server 3000
 
-# or Node (npx)
+# or Node / npx
 npx serve .
 ```
-Visit `http://localhost:3000` in your browser.
+Access at `http://localhost:3000`.
 
 ---
 
-### 2. React Version
-Navigate to the `react/` directory:
-
+### Running the React Version
 ```bash
+# Navigate to react folder
 cd react
+
+# Install dependencies
 npm install
+
+# Start Vite dev server
 npm run dev
 ```
-Visit `http://localhost:5173` in your browser.
+Access at `http://localhost:5173`.
 
 ---
 
-## 🌐 Where & How to Deploy
+## 👤 Author
 
-### Option 1: GitHub Pages (Recommended for the Vanilla Version) - 100% Free
-1. Push this repository to GitHub.
-2. In your GitHub repository, navigate to **Settings** → **Pages**.
-3. Under **Branch**, select `main` and root `/ (root)`.
-4. Click **Save**.
-5. Within 1–2 minutes, your site will be live at:
-   `https://chandana-builds.github.io/Scroll-Driven-Hero-Section-Animation/`
+**Chandana Gurrapu**
+- **GitHub**: [@chandana-builds](https://github.com/chandana-builds)
+- **Portfolio / Live Demo**: [react-red-sigma.vercel.app](https://react-red-sigma.vercel.app/)
 
 ---
 
-### Option 2: Vercel (Recommended for React or Instant Full-Stack Deployment)
-1. Go to [vercel.com](https://vercel.com) and log in with your GitHub account.
-2. Click **"Add New..."** → **"Project"**.
-3. Import `Scroll-Driven-Hero-Section-Animation`.
-4. If deploying the React version, set the **Root Directory** to `react`.
-5. Click **Deploy**. Vercel provides automatic SSL, global CDN, and preview branches on every commit.
+## 📄 License
 
----
-
-### Option 3: Netlify
-1. Log in to [netlify.com](https://netlify.com) with GitHub.
-2. Click **"Add new site"** → **"Import an existing project"**.
-3. Choose `Scroll-Driven-Hero-Section-Animation`.
-4. For vanilla, leave build command empty and publish directory as `.`. For React, set base directory to `react`, build command `npm run build`, and publish directory to `react/dist`.
-5. Click **Deploy Site**.
-
----
-
-## 🛠️ Built With
-
-- **HTML5 & Vanilla CSS3**
-- **JavaScript (ES6+)**
-- **GSAP 3 & ScrollTrigger**
-- **Lenis Smooth Scroll**
-- **Web Audio API**
-- **React 18 & Vite**
-- **Lucide Icons**
+This project is licensed under the [MIT License](LICENSE) — free to use for personal and commercial projects.
